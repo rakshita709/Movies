@@ -48,9 +48,14 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-                urlConnection.setDoOutput(true);
-
-                InputStream inputStream = urlConnection.getInputStream();
+                InputStream inputStream;
+                if(urlConnection.getResponseCode()!=404){
+                    inputStream = urlConnection.getInputStream();
+                }
+                else {
+                    inputStream = urlConnection.getErrorStream();
+                    Log.e("RESPONSE", "doInBackground: "+urlConnection.getResponseMessage() );
+                }
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String s = bufferedReader.readLine();
                 bufferedReader.close();
