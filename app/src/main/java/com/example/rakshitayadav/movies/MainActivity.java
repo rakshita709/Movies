@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.tv);
+        tv = findViewById(R.id.tv); //comment
 
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/550?api_key=8865d55dc8ba55909f3dec9e6ab79d2f");
     }
