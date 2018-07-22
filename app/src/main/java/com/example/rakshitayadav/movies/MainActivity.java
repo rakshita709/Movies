@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,29 +18,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv,tv1,tv2,tv3;
-    //ProgressBar progressBar;
-
+    TextView tv,tv2;
+    GridView gridView;
+    ArrayList<MovieDetails> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // progressBar = findViewById(R.id.progressBar);
         tv = findViewById(R.id.tv);
-        tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
-        tv3 = findViewById(R.id.tv3);
 
-        new CheckStatus().execute("https://api.themoviedb.org/3/movie/550?api_key=8865d55dc8ba55909f3dec9e6ab79d2f");
+
+        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>
@@ -85,25 +83,29 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Map<String,Integer> map = new HashMap<>();
-
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(s);
-                tv.setText(jsonObject.getString("original_title"));
-                tv1.setText(jsonObject.getString("budget"));
 
-                JSONArray jsonArray = jsonObject.getJSONArray("production_companies");
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
 
                 for (int i=0;i<jsonArray.length();i++)
                 {
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    map.put(obj.getString("name"),obj.getInt("id"));
+                    MovieDetails movieDetails = new MovieDetails();
+                    movieDetails.setId(obj.getDouble("id"));
+                    movieDetails.setTitle(obj.getString("title"));
+                    movieDetails.setOverview(obj.getString("overview"));
+                    movieDetails.setPoster_path(obj.getString("poster_path"));
 
+                    movieList.add(movieDetails);
                 }
 
-                tv2.setText("Fox 2000 Pictures");
-                tv3.setText(String.valueOf(map.get("Fox 2000 Pictures"))); // jo int val ayi..usse string me parse kia and fir display
+                tv.setText(movieList.get(2).getTitle());
+                tv2.setText(movieList.get(2).getOverview());
+
+                Log.i("Title: ", movieList.get(2).getTitle());
+                Log.i("Overview: ", movieList.get(2).getOverview());
 
             } catch (JSONException e) {
                 e.printStackTrace();
