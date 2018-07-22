@@ -5,9 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.GridView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +21,6 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv,tv2;
     GridView gridView;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
 
@@ -33,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.tv);
-        tv2 = findViewById(R.id.tv2);
-
+        gridView = findViewById(R.id.gridView);
 
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
     }
@@ -101,11 +95,8 @@ public class MainActivity extends AppCompatActivity {
                     movieList.add(movieDetails);
                 }
 
-                tv.setText(movieList.get(2).getTitle());
-                tv2.setText(movieList.get(2).getOverview());
-
-                Log.i("Title: ", movieList.get(2).getTitle());
-                Log.i("Overview: ", movieList.get(2).getOverview());
+                MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
+                gridView.setAdapter(movieAdapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();

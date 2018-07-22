@@ -4,6 +4,11 @@ public class MovieDetails {
 
     private double id;
 
+    private String title;
+    private String poster_path;
+    private String overview;
+
+
     public double getId() {
         return id;
     }
@@ -35,10 +40,6 @@ public class MovieDetails {
     public void setOverview(String overview) {
         this.overview = overview;
     }
-
-    private String title;
-    private String poster_path;
-    private String overview;
 
 
 }
