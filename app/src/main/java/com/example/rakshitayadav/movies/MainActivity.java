@@ -4,7 +4,10 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +22,7 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     GridView gridView;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
@@ -32,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.gridView);
 
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
+
+        gridView.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>
