@@ -1,5 +1,6 @@
 package com.example.rakshitayadav.movies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity {
 
     GridView gridView;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
@@ -36,13 +37,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
 
-        gridView.setOnItemClickListener(this);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
 
-    }
+                intent.setClass(MainActivity.this,AboutMovie.class);
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent.putExtra("MOVIE DETAILS",parent.getItemIdAtPosition(position));
 
+
+                startActivity(intent);
+
+
+
+            }
+        });
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>

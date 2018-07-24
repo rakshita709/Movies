@@ -1,6 +1,8 @@
 package com.example.rakshitayadav.movies;
 
-public class MovieDetails {
+import java.io.Serializable;
+
+public class MovieDetails implements Serializable{
 
     private double id;
 
