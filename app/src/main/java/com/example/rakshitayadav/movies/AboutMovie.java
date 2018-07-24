@@ -18,11 +18,11 @@ public class AboutMovie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_movie);
+        setContentView(R.layout.movie_about);
 
         movie_name = findViewById(R.id.movie_name);
-        movie_icon = findViewById(R.id.movie_thumbnail);
-        movie_overview = findViewById(R.id.movie_overview);
+        movie_icon = findViewById(R.id.ThumbnailImage);
+        movie_overview = findViewById(R.id.movieOverview);
 
         Log.e("Error in aboutMovie: 5 ", errormsg);
 
