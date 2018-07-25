@@ -13,8 +13,6 @@ public class AboutMovie extends AppCompatActivity {
     TextView movie_name,movie_overview;
     ImageView movie_icon;
 
-    String errormsg="msg";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,22 +22,15 @@ public class AboutMovie extends AppCompatActivity {
         movie_icon = findViewById(R.id.ThumbnailImage);
         movie_overview = findViewById(R.id.movieOverview);
 
-        Log.e("Error in aboutMovie: 5 ", errormsg);
+        MovieDetails details = (MovieDetails) getIntent().getExtras().getSerializable("MOVIE_DETAILS");
 
-        MovieDetails details = (MovieDetails) getIntent().getExtras().getSerializable("MOVIE DETAILS");
-
-        Log.e("Error in aboutMovie: 6 ", errormsg);
         if(details!=null)
         {
             Glide.with(this).load("https://image.tmdb.org/t/p/w500/"+details.getPoster_path()).into(movie_icon);
-            Log.e("Error in aboutMovie: 7 ", errormsg);
             movie_name.setText(details.getTitle());
-            Log.e("Error in aboutMovie: ", errormsg);
             movie_overview.setText(details.getOverview());
-            Log.e("Error in aboutMovie: ", errormsg);
+
             finish();
         }
-
-
     }
 }
