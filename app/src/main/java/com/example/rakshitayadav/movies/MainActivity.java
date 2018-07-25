@@ -1,10 +1,17 @@
 package com.example.rakshitayadav.movies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,21 +19,33 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv;
+    GridView gridView;
+    ArrayList<MovieDetails> movieList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.tv); //comment
+        gridView = findViewById(R.id.gridView);
 
-        new CheckStatus().execute("https://api.themoviedb.org/3/movie/550?api_key=8865d55dc8ba55909f3dec9e6ab79d2f");
+        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,AboutMovie.class);
+                intent.putExtra("MOVIE_DETAILS",movieList.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>
@@ -34,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            tv.setText("hii");
+
         }
 
         @Override
@@ -71,7 +90,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            tv.setText(s);
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(s);
+
+                JSONArray jsonArray = jsonObject.getJSONArray("results");
+
+                for (int i=0;i<jsonArray.length();i++)
+                {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    MovieDetails movieDetails = new MovieDetails();
+                    movieDetails.setId(obj.getDouble("id"));
+                    movieDetails.setTitle(obj.getString("title"));
+                    movieDetails.setOverview(obj.getString("overview"));
+                    movieDetails.setPoster_path(obj.getString("poster_path"));
+
+                    movieList.add(movieDetails);
+                }
+
+                MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
+                gridView.setAdapter(movieAdapter);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
