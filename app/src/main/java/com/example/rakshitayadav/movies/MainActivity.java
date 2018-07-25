@@ -26,6 +26,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class MainActivity extends AppCompatActivity {
 
     GridView gridView;
+    MovieAdapter movieAdapter;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
 
     @Override
@@ -34,18 +35,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gridView = findViewById(R.id.gridView);
+        movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
 
-        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
-
+        gridView.setAdapter(movieAdapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,AboutMovie.class);
-                intent.putExtra("MOVIE_DETAILS",movieList.get(position));
+                intent.putExtra("MOVIE_DETAILS",movieList.get(position).getId());
                 startActivity(intent);
             }
         });
+
+        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=1");
+
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>
@@ -101,16 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 {
                     JSONObject obj = jsonArray.getJSONObject(i);
                     MovieDetails movieDetails = new MovieDetails();
-                    movieDetails.setId(obj.getDouble("id"));
+                    movieDetails.setId(obj.getLong("id"));
                     movieDetails.setTitle(obj.getString("title"));
                     movieDetails.setOverview(obj.getString("overview"));
                     movieDetails.setPoster_path(obj.getString("poster_path"));
-
                     movieList.add(movieDetails);
                 }
+                movieAdapter.notifyDataSetChanged();
 
-                MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
-                gridView.setAdapter(movieAdapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();

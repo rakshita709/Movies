@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class MovieDetails implements Serializable{
 
-    private double id;
+    private long id;
 
     private String title;
     private String poster_path;
     private String overview;
 
 
-    public double getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(long id) {
         this.id = id;
     }
 
