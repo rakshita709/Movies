@@ -1,5 +1,6 @@
 package com.example.rakshitayadav.movies;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,9 +24,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class AboutMovie extends AppCompatActivity {
 
-    TextView movie_name,movie_overview;
+    TextView movie_name,movie_overview,date,rating;
     ImageView movie_icon;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class AboutMovie extends AppCompatActivity {
         movie_name = findViewById(R.id.movie_name);
         movie_icon = findViewById(R.id.ThumbnailImage);
         movie_overview = findViewById(R.id.movieOverview);
+        date = findViewById(R.id.movie_release_date);
+        rating = findViewById(R.id.movie_rating);
 
         Long movieId=getIntent().getLongExtra("MOVIE_DETAILS",-1);
         if(movieId!=-1){
@@ -81,6 +85,9 @@ public class AboutMovie extends AppCompatActivity {
                         movieDetails.setTitle(obj.getString("title"));
                         movieDetails.setOverview(obj.getString("overview"));
                         movieDetails.setPoster_path(obj.getString("poster_path"));
+                        movieDetails.setRelease_date(obj.getString("release_date"));
+                        movieDetails.setVote_average(obj.getString("vote_average"));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -90,6 +97,8 @@ public class AboutMovie extends AppCompatActivity {
                         Glide.with(AboutMovie.this).load("https://image.tmdb.org/t/p/w500/"+movieDetails.getPoster_path()).into(movie_icon);
                         movie_name.setText(movieDetails.getTitle());
                         movie_overview.setText(movieDetails.getOverview());
+                        date.setText(movieDetails.getRelease_date());
+                        rating.setText(movieDetails.getVote_average());
                     }
                 }
             }.execute(movieId);

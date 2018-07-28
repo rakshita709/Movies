@@ -1,5 +1,7 @@
 package com.example.rakshitayadav.movies;
 
+import android.widget.ScrollView;
+
 import java.io.Serializable;
 
 public class MovieDetails implements Serializable{
@@ -9,7 +11,17 @@ public class MovieDetails implements Serializable{
     private String title;
     private String poster_path;
     private String overview;
+    private String release_date;
+    private String vote_average;
 
+
+    public String getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
 
     public long getId() {
         return id;
@@ -44,4 +56,11 @@ public class MovieDetails implements Serializable{
     }
 
 
+    public String getVote_average() {
+        return vote_average;
+    }
+
+    public void setVote_average(String vote_average) {
+        this.vote_average = vote_average;
+    }
 }

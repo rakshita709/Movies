@@ -26,7 +26,6 @@ public class MovieAdapter extends ArrayAdapter {
         this.context=context;
         this.resource=resource;
         this.movieDetailsList=movieDetails;
-
     }
 
     @NonNull

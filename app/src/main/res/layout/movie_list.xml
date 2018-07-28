@@ -23,7 +23,7 @@
         android:fontFamily="verdana"
         android:gravity="center"
         android:text="movie_name"
-        android:textColor="@android:color/white"
+        android:textColor="#fff"
         android:textSize="15dp" />
 
 </LinearLayout>

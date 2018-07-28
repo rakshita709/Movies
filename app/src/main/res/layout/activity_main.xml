@@ -5,9 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#2186CB"
+    android:background="#083350"
     android:weightSum="10"
     tools:context=".MainActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +23,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:textColor="#000"
+            android:textColor="#fff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -34,12 +42,12 @@
         android:layout_weight="9"
         >
         <GridView
-            android:textColor="#000"
-            android:background="#74E4F2"
+            android:textColor="#ffffff"
+            android:background="#083350"
             android:padding="10dp"
             android:columnWidth="90dp"
             android:numColumns="2"
-            android:verticalSpacing="10dp"
+            android:verticalSpacing="15dp"
             android:horizontalSpacing="10dp"
             android:id="@+id/gridView"
             android:layout_width="match_parent"
