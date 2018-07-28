@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 
@@ -33,29 +34,30 @@ public class MainActivity extends AppCompatActivity {
     GridView gridView;
     MovieAdapter movieAdapter;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
+    private MotionEvent event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progressBar);
-
         gridView = findViewById(R.id.gridView);
         movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
-
         gridView.setAdapter(movieAdapter);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,AboutMovie.class);
+                intent.setClass(MainActivity.this,About_Movie.class);
                 intent.putExtra("MOVIE_DETAILS",movieList.get(position).getId());
                 startActivity(intent);
             }
         });
-
-
 
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page="+PAGE_NUMBER);
 
@@ -66,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-            gridView.setVisibility(View.GONE);
 
         }
 
@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                     movieDetails.setOverview(obj.getString("overview"));
                     movieDetails.setPoster_path(obj.getString("poster_path"));
                     movieList.add(movieDetails);
+
+
                 }
                 movieAdapter.notifyDataSetChanged();
 
@@ -129,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            progressBar.setVisibility(View.GONE);
+            gridView.setVisibility(View.VISIBLE);
 
         }
     }

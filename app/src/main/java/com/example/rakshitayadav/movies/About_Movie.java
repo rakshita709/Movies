@@ -5,7 +5,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +24,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class AboutMovie extends AppCompatActivity {
+public class About_Movie extends AppCompatActivity {
 
     TextView movie_name,movie_overview,date,rating;
     ImageView movie_icon;
@@ -31,7 +33,7 @@ public class AboutMovie extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_about);
+        setContentView(R.layout.about_selection);
 
         movie_name = findViewById(R.id.movie_name);
         movie_icon = findViewById(R.id.ThumbnailImage);
@@ -94,7 +96,7 @@ public class AboutMovie extends AppCompatActivity {
 
                     if(movieDetails!=null)
                     {
-                        Glide.with(AboutMovie.this).load("https://image.tmdb.org/t/p/w500/"+movieDetails.getPoster_path()).into(movie_icon);
+                        Glide.with(About_Movie.this).load("https://image.tmdb.org/t/p/w500/"+movieDetails.getPoster_path()).into(movie_icon);
                         movie_name.setText(movieDetails.getTitle());
                         movie_overview.setText(movieDetails.getOverview());
                         date.setText(movieDetails.getRelease_date());
