@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,21 +30,21 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int PAGE_NUMBER=1;
-
     ProgressBar progressBar;
     GridView gridView;
+    TextView page;
     MovieAdapter movieAdapter;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
-    private MotionEvent event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        page=findViewById(R.id.change_page);
+
         gridView = findViewById(R.id.gridView);
-        movieAdapter = new MovieAdapter(MainActivity.this,R.layout.movie_list,movieList);
+        movieAdapter = new MovieAdapter(MainActivity.this, R.layout.movie_list, movieList);
         gridView.setAdapter(movieAdapter);
 
         progressBar = findViewById(R.id.progressBar);
@@ -53,13 +55,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,About_Movie.class);
-                intent.putExtra("MOVIE_DETAILS",movieList.get(position).getId());
+                intent.setClass(MainActivity.this, About_Movie.class);
+                intent.putExtra("MOVIE_DETAILS", movieList.get(position).getId());
                 startActivity(intent);
             }
         });
 
-        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page="+PAGE_NUMBER);
+        int PAGE_NUMBER = 1;
+        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=" + PAGE_NUMBER);
 
     }
 
@@ -136,4 +139,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
