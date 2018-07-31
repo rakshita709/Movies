@@ -37,6 +37,7 @@
             android:layout_alignParentLeft="true" />
 
         <TextView
+            android:onClick="page_Change"
             android:id="@+id/change_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,10 +63,11 @@
             android:background="#083350"
             android:columnWidth="90dp"
             android:horizontalSpacing="10dp"
-            android:numColumns="2"
+            android:numColumns="3"
             android:textColor="#ffffff"
             android:verticalSpacing="15dp" />
 
     </GridLayout>
+
 
 </LinearLayout>

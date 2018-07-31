@@ -30,9 +30,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
+    float x1,x2,y1,y2;
     ProgressBar progressBar;
     GridView gridView;
     TextView page;
+    static int PAGE_NUMBER = 1;
     MovieAdapter movieAdapter;
     ArrayList<MovieDetails> movieList = new ArrayList<>();
 
@@ -61,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int PAGE_NUMBER = 1;
         new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=" + PAGE_NUMBER);
 
+    }
+
+    public void page_Change(View view )
+    {
+        PAGE_NUMBER++;
+        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=" + PAGE_NUMBER);
     }
 
     class CheckStatus extends AsyncTask<String,Void,String>
@@ -138,6 +145,35 @@ public class MainActivity extends AppCompatActivity {
             gridView.setVisibility(View.VISIBLE);
 
         }
+    }
+
+    public boolean onTouchEvent(MotionEvent touchEvent)
+    {
+        switch ((touchEvent.getAction()))
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+
+                if(x1>x2){
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this,TVShows_main.class);
+                    startActivity(intent);
+                }
+                else  if(x1<x2){
+                    Intent intent = new Intent();
+                    intent.setClass(this,MainActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
+
+        return false;
     }
 
 }

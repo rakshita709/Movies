@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/movie_name"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="8dp"
@@ -59,8 +59,8 @@
             android:src="@drawable/ic_launcher_foreground" />
 
         <TextView
-            android:layout_width="88dp"
-            android:layout_height="27dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -100,12 +100,13 @@
             app:layout_constraintVertical_bias="0.45" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/releaseDate"
                 android:paddingRight="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,19 +117,23 @@
 
             <TextView
                 android:id="@+id/movie_release_date"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/releaseDate"
                 android:text="Release Date Text"
                 android:textColor="#fff"
-                android:textSize="15dp" />
-        </LinearLayout>
+                android:textSize="15dp"
+                android:layout_toRightOf="@+id/releaseDate" />
+        </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/ratings"
                 android:paddingRight="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,13 +143,18 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:layout_toEndOf="@+id/ratings"
                 android:id="@+id/movie_rating"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
                 android:text="rating text"
                 android:textColor="#fff"
-                android:textSize="15dp" />
-        </LinearLayout>
+                android:textSize="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/ratings" />
+        </RelativeLayout>
 
     </LinearLayout>
 
