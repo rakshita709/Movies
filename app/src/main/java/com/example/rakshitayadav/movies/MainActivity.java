@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         page=findViewById(R.id.change_page);
 
         gridView = findViewById(R.id.gridView);
-        movieAdapter = new MovieAdapter(MainActivity.this, R.layout.movie_list, movieList);
+        movieAdapter = new MovieAdapter(MainActivity.this, R.layout.view_movie_list, movieList);
         gridView.setAdapter(movieAdapter);
 
         progressBar = findViewById(R.id.progressBar);
@@ -63,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new CheckStatus().execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page=" + PAGE_NUMBER);
+        new CheckStatus()
+                .execute("https://api.themoviedb.org/3/movie/popular?api_key=8865d55dc8ba55909f3dec9e6ab79d2f&language=en-US&page="
+                        + PAGE_NUMBER);
 
     }
 
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else  if(x1<x2){
                     Intent intent = new Intent();
-                    intent.setClass(this,MainActivity.class);
+                    intent.setClass(this,TVShows_main.class);
                     startActivity(intent);
                 }
                 break;

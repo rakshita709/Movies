@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TVShows_main"></activity>
+        <activity android:name=".TVShows_main" />
+        <activity android:name=".About_TV"></activity>
     </application>
 
 </manifest>
